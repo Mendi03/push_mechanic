@@ -82,8 +82,8 @@ func push():
 	print(enemy.velocity)
 	
 	# commenting out the rest except the following line works!!!! 
-	enemy.velocity = Vector3(0,0,-1) * PUSH_FORCE
-	
+	# enemy.velocity = Vector3(0,0,-1) * PUSH_FORCE
+	enemy.velocity *= -PUSH_FORCE
 	#var player_loc = global_position
 	#var enemy_loc = null
 	#print(len(enemies))
