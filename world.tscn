@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://cb53ockt1afme"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_qd3pf"]
+[ext_resource type="PackedScene" uid="uid://djd8cr871tvwo" path="res://Player/player.tscn" id="1_wg0uw"]
+[ext_resource type="PackedScene" uid="uid://dl8sc33o6g64e" path="res://Npc/enemy.tscn" id="3_fc2n7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_prcc6"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_5h8m8"]
+sky_material = SubResource("ProceduralSkyMaterial_prcc6")
+
+[sub_resource type="Environment" id="Environment_hk801"]
+background_mode = 2
+sky = SubResource("Sky_5h8m8")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_m7h7o"]
+vertices = PackedVector3Array(-14.5, 0.5, -14.5, -14.5, 0.5, 14.5, 14.5, 0.5, 14.5, 14.5, 0.5, -14.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hnle2"]
+size = Vector2(30, 30)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3wmba"]
+data = PackedVector3Array(15, 0, 15, -15, 0, 15, 15, 0, -15, -15, 0, 15, -15, 0, -15, 15, 0, -15)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_qd3pf")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hk801")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_m7h7o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+mesh = SubResource("PlaneMesh_hnle2")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3wmba")
+
+[node name="Player" parent="." instance=ExtResource("1_wg0uw")]
+
+[node name="enemy" parent="." instance=ExtResource("3_fc2n7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48525, 0, -4.47605)

@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://djd8cr871tvwo"]
+
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_4sx8b"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fnxml"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1vbmc"]
+
+[sub_resource type="GDScript" id="GDScript_brllu"]
+script/source = "extends Area3D
+@onready var player = $\".\"
+
+var enemies = []
+
+var can_push = false
+
+#var player_loc = player.global_position
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	if can_push:
+		pass
+		#push()
+
+	
+
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0nvug"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_4sx8b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_fnxml")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_1vbmc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.68829, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = SubResource("GDScript_brllu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+shape = SubResource("BoxShape3D_0nvug")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
