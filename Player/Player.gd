@@ -62,7 +62,7 @@ func _input(event):
 func _on_area_3d_body_entered(body):
 	print(body)
 	print("colliding")
-	#enemies.append(body)
+	enemies.append(body)
 	enemy = body
 	if body.is_in_group("enemy"):
 		can_push = true
@@ -82,17 +82,22 @@ func push():
 	print(enemy.velocity)
 	
 	# commenting out the rest except the following line works!!!! 
-	# enemy.velocity = Vector3(0,0,-1) * PUSH_FORCE
-	enemy.velocity *= -PUSH_FORCE
-	#var player_loc = global_position
-	#var enemy_loc = null
+	#enemy.velocity *= -PUSH_FORCE
+	
+	var player_loc = global_position
+	var enemy_loc = enemy.global_position
+	
+	var new_velocity = (enemy_loc - player_loc).normalized() * PUSH_FORCE
+	enemy.velocity = new_velocity
+	
 	#print(len(enemies))
 	#for i in enemies:
-		#if i == len(enemies):
-			#return
-		#elif i < len(enemies):
-			#enemy_loc = enemies[i].get_location()
-			#var new_velocity = (player_loc - enemy_loc).normalized() * PUSH_FORCE
-			#velocity = velocity.move_toward(new_velocity, 0.25)
+		##if i == len(enemies):
+			##return
+		##elif i < len(enemies):
+		#var enemy_loc = enemies[i].global_position
+		#var new_velocity = (enemy_loc - player_loc).normalized() * PUSH_FORCE
+		##enemy.velocity = velocity.move_toward(new_velocity, 0.25)
+		#enemies[i].velocity = new_velocity
 	#
 	print("Go away!!!")
