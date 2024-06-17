@@ -52,3 +52,9 @@ shape = SubResource("ConcavePolygonShape3D_3wmba")
 
 [node name="enemy" parent="." instance=ExtResource("3_fc2n7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48525, 0, -4.47605)
+
+[node name="enemy2" parent="." instance=ExtResource("3_fc2n7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51475, 0, -4.47605)
+
+[node name="enemy3" parent="." instance=ExtResource("3_fc2n7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51475, 0, -4.47605)
